@@ -1,0 +1,9 @@
+{
+    "inherits_from":["prod.json"],
+    "name": "junkoExampleAlpha",
+    "description": "junko example alpha stack.",
+    "stage_config": {
+        "debug_enabled":true
+    },
+    "stages": ["alpha"]
+}

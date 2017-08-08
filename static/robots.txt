@@ -1,0 +1,4 @@
+# No need for Google to index the CSS/JS/etc.
+User-agent: *
+Disallow: /assets/
+Disallow: /api/

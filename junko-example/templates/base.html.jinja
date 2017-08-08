@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<!--
+    Theory by TEMPLATED
+    templated.co @templatedco
+    Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
+<html>
+  <head>
+    <title>Example Junko Site!</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="{{ static_url_w_slash }}assets/css/main.css" />
+
+    <!-- Header -->
+    <header id="header">
+
+      <div class="inner">
+        <a href="{{ base_url_w_slash }}index.html" class="logo"><white>Example Junko Site</white></a>
+        <nav id="nav">
+          <a href="{{ base_url_w_slash }}index.html">Home</a>
+          <a href="{{ base_url_w_slash }}about.html">About</a>
+        </nav>
+        <a href="#navPanel" class="navPanelToggle"><span class="fa fa-bars"></span></a>
+      </div>
+    </header>
+    {% block head %}{% endblock %}
+  </head>
+  <body class="subpage">
+
+    {% block body %}{% endblock %}
+    <!-- Footer -->
+    <footer id="footer">
+      <div class="inner">
+        <div class="flex">
+          <div class="copyright align-center">
+            <p>&copy; Design: <a href="https://templated.co">TEMPLATED</a>.</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="{{ static_url_w_slash }}assets/js/jquery.min.js"></script>
+    <script src="{{ static_url_w_slash }}assets/js/skel.min.js"></script>
+    <script src="{{ static_url_w_slash }}assets/js/util.js"></script>
+    <script src="{{ static_url_w_slash }}assets/js/main.js"></script>
+
+  </body>
+</html>

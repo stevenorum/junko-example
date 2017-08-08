@@ -1,0 +1,90 @@
+{
+    "profile": "junko-dev",
+    "regions": "us-east-1",
+    "name": "junkoExample",
+    "description": "junko example stack.",
+    "stages": ["prod"],
+    "config_path": "sunyata.json",
+    "stage_config": {
+        "debug_enabled":false
+    },
+    "static_dirs": [
+        "static"
+    ],
+    "lambdas": [
+        {
+            "name":"catchall",
+            "runtime":"python3.6",
+            "handler":"handlers.catchall",
+            "directory":"junko-zipdir",
+            "description":"Catchall function.",
+            "timeout":10,
+            "memory":256,
+            "role":"dynamorw",
+            "proxy":true
+        }
+    ],
+    "paths": [
+        {
+            "path":"/",
+            "function":"catchall",
+            "http_method": "GET"
+        },
+        {
+            "path":"/",
+            "function":"catchall",
+            "http_method": "POST"
+        },
+        {
+            "path":"/{proxy+}",
+            "function":"catchall",
+            "http_method": "GET"
+        },
+        {
+            "path":"/{proxy+}",
+            "function":"catchall",
+            "http_method": "POST"
+        }
+    ],
+    "roles": {
+        "dynamorw":[
+        {
+            "Effect": "Allow",
+            "Action": "logs:CreateLogGroup",
+            "Resource": { "Fn::Join" : [ ":", [ "arn:aws:logs",{"Ref" : "AWS::Region"},{ "Ref" : "AWS::AccountId" },"*" ] ] }
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "logs:CreateLogStream",
+                "logs:PutLogEvents"
+            ],
+            "Resource": { "Fn::Join" : [ ":", [ "arn:aws:logs",{"Ref" : "AWS::Region"},{ "Ref" : "AWS::AccountId" },"log-group:/aws/lambda/*" ] ] }
+        },
+            {
+            "Effect": "Allow",
+            "Action": [
+                "dynamodb:BatchGetItem",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:DescribeLimits",
+                "dynamodb:DescribeReservedCapacity",
+                "dynamodb:DescribeReservedCapacityOfferings",
+                "dynamodb:DescribeStream",
+                "dynamodb:DescribeTable",
+                "dynamodb:GetItem",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:ListStreams",
+                "dynamodb:ListTables",
+                "dynamodb:PurchaseReservedCapacityOfferings",
+                "dynamodb:PutItem",
+                "dynamodb:Query",
+                "dynamodb:Scan",
+                "dynamodb:UpdateItem"
+            ],
+            "Resource": "*"
+        }
+        ]
+    }
+}
