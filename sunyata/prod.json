@@ -48,43 +48,19 @@
     ],
     "roles": {
         "dynamorw":[
-        {
-            "Effect": "Allow",
-            "Action": "logs:CreateLogGroup",
-            "Resource": { "Fn::Join" : [ ":", [ "arn:aws:logs",{"Ref" : "AWS::Region"},{ "Ref" : "AWS::AccountId" },"*" ] ] }
-        },
-        {
-            "Effect": "Allow",
-            "Action": [
-                "logs:CreateLogStream",
-                "logs:PutLogEvents"
-            ],
-            "Resource": { "Fn::Join" : [ ":", [ "arn:aws:logs",{"Ref" : "AWS::Region"},{ "Ref" : "AWS::AccountId" },"log-group:/aws/lambda/*" ] ] }
-        },
             {
-            "Effect": "Allow",
-            "Action": [
-                "dynamodb:BatchGetItem",
-                "dynamodb:BatchWriteItem",
-                "dynamodb:DeleteItem",
-                "dynamodb:DescribeLimits",
-                "dynamodb:DescribeReservedCapacity",
-                "dynamodb:DescribeReservedCapacityOfferings",
-                "dynamodb:DescribeStream",
-                "dynamodb:DescribeTable",
-                "dynamodb:GetItem",
-                "dynamodb:GetRecords",
-                "dynamodb:GetShardIterator",
-                "dynamodb:ListStreams",
-                "dynamodb:ListTables",
-                "dynamodb:PurchaseReservedCapacityOfferings",
-                "dynamodb:PutItem",
-                "dynamodb:Query",
-                "dynamodb:Scan",
-                "dynamodb:UpdateItem"
-            ],
-            "Resource": "*"
-        }
+                "Effect": "Allow",
+                "Action": "logs:CreateLogGroup",
+                "Resource": { "Fn::Join" : [ ":", [ "arn:aws:logs",{"Ref" : "AWS::Region"},{ "Ref" : "AWS::AccountId" },"*" ] ] }
+            },
+            {
+                "Effect": "Allow",
+                "Action": [
+                    "logs:CreateLogStream",
+                    "logs:PutLogEvents"
+                ],
+                "Resource": { "Fn::Join" : [ ":", [ "arn:aws:logs",{"Ref" : "AWS::Region"},{ "Ref" : "AWS::AccountId" },"log-group:/aws/lambda/*" ] ] }
+            }
         ]
     }
 }

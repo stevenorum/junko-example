@@ -8,34 +8,42 @@
     </header>
     <script>
       function submitRequest() {
-        var formData = {
-          text_input: $("#text_input").val(),
-          text_area: $("#text_area_input").val(),
-          selectable: $("#selectable_input").val(),
-          date_input: $("#date_input").val(),
-          datalist: $("#datalist_input").val(),
-          radio: $('input[name="radio_btn_input"]:checked').val(),
-          cb_one: $("#checkbox_1_input").is(':checked'),
-          cb_two: $("#checkbox_2_input").is(':checked'),
-          date_input: $("#date_input").val(),
-          time_input: $("#time_input").val(),
-          datetime_input: $("#datetime_input").val(),
-          month_input: $("#month_input").val(),
-          week_input: $("#week_input").val(),
-          email_input: $("#email_input").val(),
-          integer_input: $("#integer_input").val(),
-          range_input: $("#range_input").val(),
-          telephone_input: $("#telephone_input").val(),
-          search_input: $("#search_input").val(),
-          url_input: $("#url_input").val(),
-          password_input: $("#password_input").val(),
-          color_input: $("#color_input").val(),
-        };
-        console.log(JSON.stringify(formData));
+        var requestData;
+        var parse_text_area = $('input[name="parse_textarea_as_json"]:checked').val();
+        if (parse_text_area == "true") {
+          requestData = $("#text_area_input").val();
+        } else {
+          var formData = {
+            text_input: $("#text_input").val(),
+            text_area: $("#text_area_input").val(),
+            selectable: $("#selectable_input").val(),
+            date_input: $("#date_input").val(),
+            datalist: $("#datalist_input").val(),
+            radio: $('input[name="radio_btn_input"]:checked').val(),
+            cb_one: $("#checkbox_1_input").is(':checked'),
+            cb_two: $("#checkbox_2_input").is(':checked'),
+            date_input: $("#date_input").val(),
+            time_input: $("#time_input").val(),
+            datetime_input: $("#datetime_input").val(),
+            month_input: $("#month_input").val(),
+            week_input: $("#week_input").val(),
+            email_input: $("#email_input").val(),
+            integer_input: $("#integer_input").val(),
+            range_input: $("#range_input").val(),
+            telephone_input: $("#telephone_input").val(),
+            search_input: $("#search_input").val(),
+            url_input: $("#url_input").val(),
+            password_input: $("#password_input").val(),
+            color_input: $("#color_input").val(),
+          };
+          requestData = JSON.stringify(formData);
+        }
+        var requestType = $('input[name="request_type_input"]:checked').val()
+        console.log(requestData);
         $.ajax({
-          method: "POST",
+          method: requestType,
           url: "{{ base_url }}/"+$("#api_path").val(),
-          data: JSON.stringify(formData),
+          data: requestData,
           cache: false,
           contentType: "application/json",
           success: function(result){
@@ -54,7 +62,7 @@
         return false;
       }
     </script>
-    <p>
+    <h3>Enter your parameters here:</h3>
     <form id="form" method="POST" onsubmit="return submitRequest()">
       <input style="width:50%;display:inline;" type="text" name="text_input" id="text_input" value="Text input goes here.">
       Example value: "Text input goes here."<br><br>
@@ -75,12 +83,12 @@
         <option value="Third DL element">
         <option value="Last DL element">
       </datalist>
-      Radio 1: <input type="radio" name="radio_btn_input" value="radio_one"><br>
-      Radio 2: <input type="radio" name="radio_btn_input" value="radio_two" checked><br>
-      Radio 3: <input type="radio" name="radio_btn_input" value="radio_three"><br>
+      Radio 1: <input style="float:none;display:inline;" type="radio" name="radio_btn_input" value="radio_one"><br>
+      Radio 2: <input style="float:none;display:inline;" type="radio" name="radio_btn_input" value="radio_two" checked><br>
+      Radio 3: <input style="float:none;display:inline;" type="radio" name="radio_btn_input" value="radio_three"><br>
       Example value: "radio_two"<br><br>
-      Checkbox 1: <input type="checkbox" name="checkbox_1" id="checkbox_1_input" value="Checkbox 1"> Example value: "false"<br>
-      Checkbox 2: <input type="checkbox" name="checkbox_2" id="checkbox_2_input" value="Checkbox 2" checked> Example value: "true"<br>
+      Checkbox 1: <input style="float:none;display:inline;" type="checkbox" name="checkbox_1" id="checkbox_1_input" value="Checkbox 1"> Example value: "false"<br>
+      Checkbox 2: <input style="float:none;display:inline;" type="checkbox" name="checkbox_2" id="checkbox_2_input" value="Checkbox 2" checked> Example value: "true"<br>
       <br>
       Date input: <input type="date" name="date_input" id="date_input" value="2017-08-21"> Example value: "2017-08-21"<br>
       Time input: <input type="time" name="time" id="time_input" value="14:42"> Example value: "14:42"<br>
@@ -99,9 +107,24 @@
       Range: <input type="range" name="range" id="range_input" min="0" max="10" value="7"> Example value: "7"<br>
       <br>
       <input id="btn" type="submit" value="Submit" /> <input type="reset"><br>
-      API path, to be appended to the base URL: <input style="width:50%;display:inline;" type="text" name="api_path" id="api_path" value="api/" class="inline-input"><br>
+      <br>
+      <h3>Random technical details:</h3>
+      <h4>API path, to be appended to the base URL:</h4>
+      <input style="width:50%;display:inline;" type="text" name="api_path" id="api_path" value="api/" class="inline-input"><br>
+      <br>
+      <h4>Input source:</h4>
+      Parse JSON in the big text box: <input style="float:none;display:inline;" type="radio" name="parse_textarea_as_json" value="true"><br>
+      Use the values in all the fields: <input style="float:none;display:inline;" type="radio" name="parse_textarea_as_json" value="false" checked><br>
+      <br>
+      <h4>HTTP method:</h4>
+      POST: <input style="float:none;display:inline;" type="radio" name="request_type_input" value="POST" checked> (This is currently the only one that seems to work.)<br>
+      GET: <input style="float:none;display:inline;" type="radio" name="request_type_input" value="GET"><br>
+      HEAD: <input style="float:none;display:inline;" type="radio" name="request_type_input" value="HEAD"><br>
+      PUT: <input style="float:none;display:inline;" type="radio" name="request_type_input" value="PUT"><br>
+      DELETE: <input style="float:none;display:inline;" type="radio" name="request_type_input" value="DELETE"><br>
+      OPTIONS: <input style="float:none;display:inline;" type="radio" name="request_type_input" value="OPTIONS"><br>
     </form>
-    </p>
+    <h3>See the result here:</h3>
     <div id="response_area">
       <p>(Response content will appear here.)</p>
     </div>
