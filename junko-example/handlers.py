@@ -39,6 +39,9 @@ def get_debug_string(request):
 def debug(request):
     return make_response(format_content(get_debug_string(request)))
 
+def receive_api_request(request):
+    return make_response(format_content(get_debug_string(request)))
+
 STATIC_CHAIN.add_links(
     *[StaticLink(filename, debug_name=filename.split("/")[-1]) for filename in SUNYATA_CONFIG["static_file_list"]]
 )
@@ -46,11 +49,13 @@ STATIC_CHAIN.add_links(
 PAGE_CHAIN.add_links(
     TemplateLink(r"^/?(index.html)?$", template_name="index.html", debug_name="Index page"),
     TemplateLink(r"^/?about.html$", template_name="about.html", debug_name="About page"),
+    TemplateLink(r"^/?input.html$", template_name="input.html", debug_name="Input page"),
 )
 
 if SUNYATA_CONFIG.debug_enabled:
-    DEBUG_CHAIN.add_link(
-        Link(r"^.*debug$", debug, debug_name="Debug page")
+    DEBUG_CHAIN.add_links(
+        Link(r"^.*debug$", debug, debug_name="Debug page"),
+        Link(r"^/?api.*$", receive_api_request, debug_name="API handler")
     )
 
 @log_calls

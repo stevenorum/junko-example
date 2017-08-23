@@ -1,0 +1,110 @@
+{% extends "base.html.jinja" %}
+{% block body %}
+<section id="three" class="wrapper">
+  <div class="inner">
+    <header class="align-center">
+      <h2>Example Junko Inputs page!</h2>
+      <p>This is a page that gives you a playground for building APIs into junko sites.</p>
+    </header>
+    <script>
+      function submitRequest() {
+        var formData = {
+          text_input: $("#text_input").val(),
+          text_area: $("#text_area_input").val(),
+          selectable: $("#selectable_input").val(),
+          date_input: $("#date_input").val(),
+          datalist: $("#datalist_input").val(),
+          radio: $('input[name="radio_btn_input"]:checked').val(),
+          cb_one: $("#checkbox_1_input").is(':checked'),
+          cb_two: $("#checkbox_2_input").is(':checked'),
+          date_input: $("#date_input").val(),
+          time_input: $("#time_input").val(),
+          datetime_input: $("#datetime_input").val(),
+          month_input: $("#month_input").val(),
+          week_input: $("#week_input").val(),
+          email_input: $("#email_input").val(),
+          integer_input: $("#integer_input").val(),
+          range_input: $("#range_input").val(),
+          telephone_input: $("#telephone_input").val(),
+          search_input: $("#search_input").val(),
+          url_input: $("#url_input").val(),
+          password_input: $("#password_input").val(),
+          color_input: $("#color_input").val(),
+        };
+        console.log(JSON.stringify(formData));
+        $.ajax({
+          method: "POST",
+          url: "{{ base_url }}/"+$("#api_path").val(),
+          data: JSON.stringify(formData),
+          cache: false,
+          contentType: "application/json",
+          success: function(result){
+            $("#response_area").html(result);
+          }
+        })
+        .done(function() {
+          console.log( "done" );
+        })
+        .fail(function() {
+          console.log( "error" );
+        })
+        .always(function() {
+          console.log( "finished" );
+        });
+        return false;
+      }
+    </script>
+    <p>
+    <form id="form" method="POST" onsubmit="return submitRequest()">
+      <input style="width:50%;display:inline;" type="text" name="text_input" id="text_input" value="Text input goes here.">
+      Example value: "Text input goes here."<br><br>
+      <select name="selectable" id="selectable_input" class="inline-input">
+        <option value="first">First</option>
+        <option value="second">Second</option>
+        <option value="third">Third</option>
+        <option value="last" selected>Last</option>
+      </select>
+      Example value: "last"<br><br>
+      <textarea name="text_area" id="text_area_input" rows="10" cols="30">Text area input goes here.</textarea>
+      Example value: "Text area input goes here."<br><br>
+      <input list="datalist_list" id="datalist_input" value="Third DL element">
+      Example value: "Third DL element"<br><br>
+      <datalist id="datalist_list">
+        <option value="First DL element">
+        <option value="Second DL element">
+        <option value="Third DL element">
+        <option value="Last DL element">
+      </datalist>
+      Radio 1: <input type="radio" name="radio_btn_input" value="radio_one"><br>
+      Radio 2: <input type="radio" name="radio_btn_input" value="radio_two" checked><br>
+      Radio 3: <input type="radio" name="radio_btn_input" value="radio_three"><br>
+      Example value: "radio_two"<br><br>
+      Checkbox 1: <input type="checkbox" name="checkbox_1" id="checkbox_1_input" value="Checkbox 1"> Example value: "false"<br>
+      Checkbox 2: <input type="checkbox" name="checkbox_2" id="checkbox_2_input" value="Checkbox 2" checked> Example value: "true"<br>
+      <br>
+      Date input: <input type="date" name="date_input" id="date_input" value="2017-08-21"> Example value: "2017-08-21"<br>
+      Time input: <input type="time" name="time" id="time_input" value="14:42"> Example value: "14:42"<br>
+      Datetime input: <input type="datetime-local" name="datetime_input" id="datetime_input" value="2017-08-20T14:42"> Example value: "2017-08-20T14:42"<br>
+      Month: <input type="month" name="month" id="month_input" value="2017-08"> Example value: "2017-08"<br>
+      Week: <input type="week" name="week" id="week_input" value="2017-W34"> Example value: "2017-W34"<br>
+      <br>
+      E-mail: <input style="width:50%;display:inline;" type="email" name="email" id="email_input" value="exampleEmail@gmail.com"> Example value: "exampleEmail@gmail.com"<br>
+      Telephone: <input style="width:50%;display:inline;" type="tel" name="telephone" id="telephone_input" value="123-456-7890"> Example value: "123-456-7890"<br>
+      URL: <input style="width:50%;display:inline;" type="url" name="url" id="url_input" value="https://www.google.com"> Example value: "https://www.google.com"<br>
+      Search: <input style="width:50%;display:inline;" type="search" name="search" id="search_input" value="How is babby formed?"> Example value: "How is babby formed?"<br>
+      Password: <input style="width:50%;display:inline;" type="password" name="password" id="password_input" value="Password!"> Example value: "Password!"<br>
+      <br>
+      Color: <input type="color" name="color" id="color_input" value="#af0007"> Example value: "#af0007"<br>
+      Integer: <input type="number" name="integer" id="integer_input" min="1" max="10" value="3"> Example value: "3"<br>
+      Range: <input type="range" name="range" id="range_input" min="0" max="10" value="7"> Example value: "7"<br>
+      <br>
+      <input id="btn" type="submit" value="Submit" /> <input type="reset"><br>
+      API path, to be appended to the base URL: <input style="width:50%;display:inline;" type="text" name="api_path" id="api_path" value="api/" class="inline-input"><br>
+    </form>
+    </p>
+    <div id="response_area">
+      <p>(Response content will appear here.)</p>
+    </div>
+  </div>
+</section>
+{% endblock %}
